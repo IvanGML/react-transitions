@@ -35,6 +35,8 @@ class Navbar extends Component {
                     classNames="balloon"
                     unmountOnExit
                     appear
+                    // enter={false} // in case we want to swith off animation dynamicaly
+                    // exit={false}
                     >
                     <div className="menu">
                         <ul className="list">
