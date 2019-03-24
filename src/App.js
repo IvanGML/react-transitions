@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import Navbar from "./navbar-transition/Navbar";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        hello
-      </div>
+      <Navbar />
     );
   }
 }
