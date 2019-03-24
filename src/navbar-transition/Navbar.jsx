@@ -5,7 +5,7 @@ import './navbar.css';
 
 class Navbar extends Component {
     state = {
-        showBalloon: false,
+        showBalloon: true,
     };
 
     toggle = () => {
@@ -34,6 +34,7 @@ class Navbar extends Component {
                     timeout={400}
                     classNames="balloon"
                     unmountOnExit
+                    appear
                     >
                     <div className="menu">
                         <ul className="list">

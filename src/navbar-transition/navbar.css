@@ -77,7 +77,8 @@
 
   /* swipe to top menu animation */
 
-  .balloon-enter {
+  .balloon-enter, 
+  .balloon-appear {
     top: var(--menu-starting-top);
     width: var(--toggler-width);
     max-height: var(--toggler-height);
@@ -86,7 +87,8 @@
     z-index: 3;
   }
   
-  .balloon-enter-active {
+  .balloon-enter-active,
+  .balloon-appear-active {
     top: var(--menu-ending-top);
     width: var(--menu-width);
     max-height: var(--menu-max-height);
