@@ -10,7 +10,7 @@
     --menu-bg-color: #ffdc73;
     --fade-from-color: transparent;
     --fade-to-color: black;
-    --timeout: 550ms;
+    --timeout: 350ms;
   }
   
   .container {
@@ -115,5 +115,7 @@
   }
 
   .highlighted {
-    color: #bb2a2a;
+    color: #29970d;
+    font-weight: bold;
+    transition: all var(--timeout);
   }
