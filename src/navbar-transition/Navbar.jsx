@@ -6,6 +6,7 @@ import './navbar.css';
 class Navbar extends Component {
     state = {
         showBalloon: true,
+        isHighlighted: false,
     };
 
     toggle = () => {
@@ -14,8 +15,14 @@ class Navbar extends Component {
         }));
     };
 
+    highlightMenuItem = () => {
+        this.setState(({isHighlighted}) => ({
+            isHighlighted: !isHighlighted
+        }))
+    }
+
     render() {
-        const { showBalloon } = this.state;
+        const { showBalloon, isHighlighted } = this.state;
         return (
             <div className="container">
                 <button
@@ -37,11 +44,15 @@ class Navbar extends Component {
                     appear
                     // enter={false} // in case we want to swith off animation dynamicaly
                     // exit={false}
+                    onEntered={()=>this.highlightMenuItem()}
+                    onExit={()=>this.highlightMenuItem()}
                     >
                     <div className="menu">
                         <ul className="list">
                             <li className="list-item">Home</li>
-                            <li className="list-item">Profile</li>
+                            <li className={
+                                cx("list-item", {highlighted: isHighlighted})
+                            }>Profile</li>
                             <li className="list-item">Favorites</li>
                             <li className="list-item">Sign out</li>
                         </ul>

@@ -113,3 +113,7 @@
     background-color: var(--toggler-bg-color);
     transition: all var(--timeout);
   }
+
+  .highlighted {
+    color: #bb2a2a;
+  }
