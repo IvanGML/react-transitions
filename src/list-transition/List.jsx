@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
 import uuid from 'uuid';
 import './list.css';
 
@@ -79,13 +83,19 @@ class List extends Component {
         </ul>
         <div className="favorites">
           <p>My Favorites:</p>
-          <ul>
+          <TransitionGroup component="ul">
             {this.state.favorites.map(
               ({ id, name }) => (
-                  <li key={id} className="favorite">{name}</li>
+                <CSSTransition
+                  timeout={500}
+                  classNames="fade"
+                  key={id}
+                >
+                  <li className="favorite">{name}</li>
+                </CSSTransition>
               )
             )}
-          </ul>
+          </TransitionGroup>
         </div>
       </div>
     );
