@@ -1,13 +1,34 @@
-import React, { Component } from "react";
-import { CSSTransition } from 'react-transition-group';
+import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import Favorites from '../pages/Favorites';
+import Home from '../pages/Home';
+import Profile from '../pages/Profile';
 import cx from 'classnames';
 import './navbar.css';
 
+class NavbarRouter extends Component {
+    render() {
+        return (
+            <Router>
+                <Route component={Navbar} />
+            </Router>
+        );
+    }
+}
+
 class Navbar extends Component {
     state = {
-        showBalloon: true,
+        showBalloon: false,
         isHighlighted: false,
     };
+
+    componentWillReceiveProps = (nextProps) => {
+        if(nextProps.location !== this.props.location) {
+            console.log('this.props.location', this.props.location);
+            this.toggle();
+        }
+    }
 
     toggle = () => {
         this.setState(prevState => ({
@@ -16,51 +37,85 @@ class Navbar extends Component {
     };
 
     highlightMenuItem = () => {
-        this.setState(({isHighlighted}) => ({
+        this.setState(({ isHighlighted }) => ({
             isHighlighted: !isHighlighted
         }))
     }
 
     render() {
         const { showBalloon, isHighlighted } = this.state;
+        const { location } = this.props;
         return (
-            <div className="container">
-                <button
-                    className={
-                        cx('toggler',
-                            {
-                                'toggler--active': this.state.showBalloon,
-                            }
-                        )}
-                    onClick={this.toggle}
-                >
-                    Menu
-                </button>
-                <CSSTransition
-                    in={showBalloon}
-                    timeout={400}
-                    classNames="balloon"
-                    unmountOnExit
-                    appear
-                    // enter={false} // in case we want to swith off animation dynamicaly
-                    // exit={false}
-                    onEntered={()=>this.highlightMenuItem()}
-                    onExit={()=>this.highlightMenuItem()}
+            <Fragment>
+                <div className="container">
+                    <button
+                        className={
+                            cx('toggler',
+                                {
+                                    'toggler--active': this.state.showBalloon,
+                                }
+                            )}
+                        onClick={this.toggle}
                     >
-                    <div className="menu">
-                        <ul className="list">
-                            <li className="list-item">Home</li>
-                            <li className={
-                                cx("list-item", {highlighted: isHighlighted})
-                            }>Profile</li>
-                            <li className="list-item">Favorites</li>
-                            <li className="list-item">Sign out</li>
-                        </ul>
+                        Menu
+                    </button>
+                    <CSSTransition
+                        in={showBalloon}
+                        timeout={400}
+                        classNames="balloon"
+                        unmountOnExit
+                        appear
+                        // enter={false} // in case we want to swith off animation dynamicaly
+                        // exit={false}
+                        onEntered={()=>this.highlightMenuItem()}
+                        onExit={()=>this.highlightMenuItem()}
+                        >
+                        <div className="menu">
+                            <ul className="list">
+                                <li className="list-item">
+                                    <Link to="/">Home</Link>
+                                </li>
+                                <li className={cx("list-item", {highlighted: isHighlighted})}>
+                                    <Link to="/profile">Profile</Link>
+                                </li>
+                                <li className="list-item">
+                                    <Link to="/favorites">Favorites</Link>
+                                </li>
+                                <li className="list-item">Sign out</li>
+                            </ul>
+                        </div>
+                    </CSSTransition>
+                </div>
+                <TransitionGroup>
+                <CSSTransition
+                    key={location.key}
+                    classNames="swipe"
+                    timeout={500}
+                >
+                    <div className="swipe-container">
+                    <Switch location={location}>
+                        <Route
+                        exact
+                        path="/"
+                        component={Home}
+                        />
+                        <Route
+                        exact
+                        path="/profile"
+                        component={Profile}
+                        />
+                        <Route
+                        exact
+                        path="/favorites"
+                        component={Favorites}
+                        />
+                    </Switch>
                     </div>
                 </CSSTransition>
-            </div>
+                </TransitionGroup>
+            </Fragment>
         );
     }
 }
 
-export default Navbar;
+export default NavbarRouter;
