@@ -1,4 +1,5 @@
 import React from 'react';
+import List from "../list-transition/List";
 
 const Profile = () => {
   return (
@@ -14,13 +15,7 @@ const Profile = () => {
         tortor. Proin quis tellus porttitor, suscipit
         felis ac, semper augue.
       </p>
-      <p>
-        Sed tempor aliquam purus luctus convallis.
-        Curabitur blandit ipsum nulla, at fermentum
-        lacus tempor ac. Integer vitae risus id augue
-        eleifend porttitor sit amet bibendum ipsum.
-        Integer quis tincidunt nibh.
-      </p>
+      <List />
     </div>
   );
 };

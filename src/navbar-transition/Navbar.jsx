@@ -5,17 +5,8 @@ import Favorites from '../pages/Favorites';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import cx from 'classnames';
-import './navbar.css';
-
-class NavbarRouter extends Component {
-    render() {
-        return (
-            <Router>
-                <Route component={Navbar} />
-            </Router>
-        );
-    }
-}
+import styles from './styles';
+import injectSheet from 'react-jss';
 
 class Navbar extends Component {
     state = {
@@ -43,15 +34,15 @@ class Navbar extends Component {
 
     render() {
         const { showBalloon, isHighlighted } = this.state;
-        const { location } = this.props;
+        const { location, classes } = this.props;
         return (
             <Fragment>
-                <div className="container">
+                <div className={classes.container}>
                     <button
                         className={
-                            cx('toggler',
+                            cx(classes.toggler,
                                 {
-                                    'toggler--active': this.state.showBalloon,
+                                    [classes.togglerActive]: this.state.showBalloon,
                                 }
                             )}
                         onClick={this.toggle}
@@ -61,7 +52,12 @@ class Navbar extends Component {
                     <CSSTransition
                         in={showBalloon}
                         timeout={400}
-                        classNames="balloon"
+                        classNames={{
+                            enter: classes.balloonEnter,
+                            enterActive: classes.balloonEnterActive,
+                            exit: classes.balloonExit,
+                            exitActive: classes.balloonExitActive,
+                        }}
                         unmountOnExit
                         appear
                         // enter={false} // in case we want to swith off animation dynamicaly
@@ -69,18 +65,18 @@ class Navbar extends Component {
                         onEntered={()=>this.highlightMenuItem()}
                         onExit={()=>this.highlightMenuItem()}
                         >
-                        <div className="menu">
-                            <ul className="list">
-                                <li className="list-item">
+                        <div className={classes.menu}>
+                            <ul className={classes.list}>
+                                <li className={classes.listItem}>
                                     <Link to="/">Home</Link>
                                 </li>
-                                <li className={cx("list-item", {highlighted: isHighlighted})}>
+                                <li className={cx([classes.listItem], {highlighted: isHighlighted})}>
                                     <Link to="/profile">Profile</Link>
                                 </li>
-                                <li className="list-item">
+                                <li className={classes.listItem}>
                                     <Link to="/favorites">Favorites</Link>
                                 </li>
-                                <li className="list-item">Sign out</li>
+                                <li className={classes.listItem}>Sign out</li>
                             </ul>
                         </div>
                     </CSSTransition>
@@ -88,7 +84,12 @@ class Navbar extends Component {
                 <TransitionGroup>
                 <CSSTransition
                     key={location.key}
-                    classNames="swipe"
+                    classNames={{
+                        enter: classes.swipeEnter,
+                        enterActive: classes.swipeEnterActive,
+                        exit: classes.swipeExit,
+                        exitActive: classes.swipeExitActive,
+                    }}
                     timeout={500}
                 >
                     <div className="swipe-container">
@@ -113,6 +114,18 @@ class Navbar extends Component {
                 </CSSTransition>
                 </TransitionGroup>
             </Fragment>
+        );
+    }
+}
+
+const NavbarStyled = injectSheet(styles)(Navbar);
+
+class NavbarRouter extends Component {
+    render() {
+        return (
+            <Router>
+                <Route component={NavbarStyled} />
+            </Router>
         );
     }
 }
