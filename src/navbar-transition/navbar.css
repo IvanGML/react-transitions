@@ -114,9 +114,8 @@ transition: all var(--timeout);
   transition: all var(--timeout);
 }
 
-.highlighted {
+.highlighted a {
   color: #29970d;
-  font-weight: bold;
   transition: all var(--timeout);
 }
 
@@ -144,5 +143,4 @@ transition: all var(--timeout);
   transform: translateY(100%);
   opacity: 0;
   transition: all 500ms;
-
 }

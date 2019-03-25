@@ -23,9 +23,8 @@ class Navbar extends Component {
         isHighlighted: false,
     };
 
-    componentWillReceiveProps = (nextProps) => {
+    componentWillReceiveProps = nextProps => {
         if(nextProps.location !== this.props.location) {
-            console.log('this.props.location', this.props.location);
             this.toggle();
         }
     }
