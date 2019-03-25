@@ -80,6 +80,13 @@ const styles = {
         ...startTransitionStyles,
         transition: `all ${vars.timeout}`,
     },
+    highlighted: {
+        color: '#29970d',
+        transition: `all ${vars.timeout}`,
+    },
+    swipeContainer: {
+        position: 'absolute',
+    },
     swipeEnter: {
         transform: 'translateY(-100%)',
         opacity: 0,

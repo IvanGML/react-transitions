@@ -70,8 +70,8 @@ class Navbar extends Component {
                                 <li className={classes.listItem}>
                                     <Link to="/">Home</Link>
                                 </li>
-                                <li className={cx([classes.listItem], {highlighted: isHighlighted})}>
-                                    <Link to="/profile">Profile</Link>
+                                <li className={classes.listItem}>
+                                    <Link className={cx({[classes.highlighted]: isHighlighted})} to="/profile">Profile</Link>
                                 </li>
                                 <li className={classes.listItem}>
                                     <Link to="/favorites">Favorites</Link>
