@@ -6,6 +6,7 @@ import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import cx from 'classnames';
 import './navbar.css';
+import { Toggler } from './components';
 
 class NavbarRouter extends Component {
     render() {
@@ -47,17 +48,11 @@ class Navbar extends Component {
         return (
             <Fragment>
                 <div className="container">
-                    <button
-                        className={
-                            cx('toggler',
-                                {
-                                    'toggler--active': this.state.showBalloon,
-                                }
-                            )}
+                    <Toggler
                         onClick={this.toggle}
                     >
                         Menu
-                    </button>
+                    </Toggler>
                     <CSSTransition
                         in={showBalloon}
                         timeout={400}
