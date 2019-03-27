@@ -6,7 +6,7 @@ import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import cx from 'classnames';
 import './navbar.css';
-import { Toggler } from './components';
+import { Toggler, Container, Menu, List, ListItem } from './components';
 
 class NavbarRouter extends Component {
     render() {
@@ -25,7 +25,7 @@ class Navbar extends Component {
     };
 
     componentWillReceiveProps = nextProps => {
-        if(nextProps.location !== this.props.location) {
+        if (nextProps.location !== this.props.location) {
             this.toggle();
         }
     }
@@ -47,65 +47,58 @@ class Navbar extends Component {
         const { location } = this.props;
         return (
             <Fragment>
-                <div className="container">
+                <Container>
                     <Toggler
+                        active={showBalloon}
                         onClick={this.toggle}
                     >
                         Menu
                     </Toggler>
-                    <CSSTransition
+                    <Menu
                         in={showBalloon}
-                        timeout={400}
-                        classNames="balloon"
+                        timeout={350}
                         unmountOnExit
-                        appear
-                        // enter={false} // in case we want to swith off animation dynamicaly
-                        // exit={false}
-                        onEntered={()=>this.highlightMenuItem()}
-                        onExit={()=>this.highlightMenuItem()}
-                        >
-                        <div className="menu">
-                            <ul className="list">
-                                <li className="list-item">
-                                    <Link to="/">Home</Link>
-                                </li>
-                                <li className={cx("list-item", {highlighted: isHighlighted})}>
-                                    <Link to="/profile">Profile</Link>
-                                </li>
-                                <li className="list-item">
-                                    <Link to="/favorites">Favorites</Link>
-                                </li>
-                                <li className="list-item">Sign out</li>
-                            </ul>
+                    >
+                        <List>
+                            <ListItem>
+                                <Link to="/">Home</Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link to="/profile">Profile</Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link to="/favorites">Favorites</Link>
+                            </ListItem>
+                            <ListItem>Sign out</ListItem>
+                        </List>
+                    </Menu>
+                </Container>
+                <TransitionGroup>
+                    <CSSTransition
+                        key={location.key}
+                        classNames="swipe"
+                        timeout={500}
+                    >
+                        <div className="swipe-container">
+                            <Switch location={location}>
+                                <Route
+                                    exact
+                                    path="/"
+                                    component={Home}
+                                />
+                                <Route
+                                    exact
+                                    path="/profile"
+                                    component={Profile}
+                                />
+                                <Route
+                                    exact
+                                    path="/favorites"
+                                    component={Favorites}
+                                />
+                            </Switch>
                         </div>
                     </CSSTransition>
-                </div>
-                <TransitionGroup>
-                <CSSTransition
-                    key={location.key}
-                    classNames="swipe"
-                    timeout={500}
-                >
-                    <div className="swipe-container">
-                    <Switch location={location}>
-                        <Route
-                        exact
-                        path="/"
-                        component={Home}
-                        />
-                        <Route
-                        exact
-                        path="/profile"
-                        component={Profile}
-                        />
-                        <Route
-                        exact
-                        path="/favorites"
-                        component={Favorites}
-                        />
-                    </Switch>
-                    </div>
-                </CSSTransition>
                 </TransitionGroup>
             </Fragment>
         );
