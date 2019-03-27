@@ -7,6 +7,18 @@ import Profile from '../pages/Profile';
 import cx from 'classnames';
 import styles from './styles';
 import injectSheet from 'react-jss';
+import './navbar.css';
+import { Toggler } from './components';
+
+class NavbarRouter extends Component {
+    render() {
+        return (
+            <Router>
+                <Route component={Navbar} />
+            </Router>
+        );
+    }
+}
 
 class Navbar extends Component {
     state = {
@@ -45,10 +57,12 @@ class Navbar extends Component {
                                     [classes.togglerActive]: this.state.showBalloon,
                                 }
                             )}
+                <div className="container">
+                    <Toggler
                         onClick={this.toggle}
                     >
                         Menu
-                    </button>
+                    </Toggler>
                     <CSSTransition
                         in={showBalloon}
                         timeout={400}
